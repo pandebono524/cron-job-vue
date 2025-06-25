@@ -6,7 +6,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-// Pre-import all SVG files
 import activateSvg from '../assets/svg/activate.svg?raw';
 import affiliateSvg from '../assets/svg/affiliate.svg?raw';
 import arrowDownSvg from '../assets/svg/arrow-down.svg?raw';
@@ -33,7 +32,6 @@ const props = defineProps<{
   active?: boolean;
 }>();
 
-// SVG mapping object
 const svgMap = {
   activate: activateSvg,
   affiliate: affiliateSvg,
