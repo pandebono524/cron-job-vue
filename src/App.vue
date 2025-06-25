@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto max-w-[1440px] bg-white">
+  <div class="w-full bg-white">
     <div class="flex flex-row w-full h-full min-h-screen relative">
       <div class="fixed md:sticky top-0 h-screen z-20">
         <Sidebar />

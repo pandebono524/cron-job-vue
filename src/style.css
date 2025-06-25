@@ -24,6 +24,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: white;
+
+  --premium-start: #C8239B;
+  --premium-end: #5944DF;
+  --premium-border: rgba(247, 247, 247, 0.18);
 }
 
 a {
@@ -46,19 +50,6 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-
-/* 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-} */
 
 button:hover {
   border-color: #646cff;
@@ -86,4 +77,30 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.font-ibm {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+.bg-premium-gradient {
+  background-image: linear-gradient(90deg,
+      var(--premium-start) 7.73%,
+      var(--premium-end) 95.41%);
+}
+
+.shadow-premium {
+  box-shadow: 15px 15px 30px 0 rgba(239, 227, 246, 0.26);
+}
+
+.border-premium {
+  border-color: var(--premium-border);
+}
+
+.text-premium-start {
+  color: var(--premium-start);
+}
+
+.text-premium-end {
+  color: var(--premium-end);
 }

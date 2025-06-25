@@ -5,29 +5,20 @@
                 Trending Searches
             </span>
             <div class="flex flex-row items-center">
-                <div ref="prevEl"
-                    @click="goPrev"
+                <div ref="prevEl" @click="goPrev"
                     class="flex cursor-pointer justify-center px-2 py-[10px] rounded-r rounded-lg items-center border border-[#EFEFEF] [background:linear-gradient(90deg,rgba(200,35,155,0.1)_7.73%,rgba(89,68,223,0.1)_95.41%)]">
                     <Svg name="sidebar"></Svg>
                 </div>
-                <div ref="nextEl"
-                    @click="goNext"
+                <div ref="nextEl" @click="goNext"
                     class="flex cursor-pointer justify-center px-2 py-[10px] rounded-l rounded-lg items-center border border-[#EFEFEF] [background:linear-gradient(90deg,rgba(200,35,155,0.1)_7.73%,rgba(89,68,223,0.1)_95.41%)]">
                     <Svg name="sidebar" class="rotate-180"></Svg>
                 </div>
             </div>
         </div>
-        <Swiper 
-            :modules="[Navigation]" 
-            :slides-per-view="'auto'" 
-            :space-between="14"
-            :navigation="{ 
-                nextEl: nextEl, 
-                prevEl: prevEl 
-            }" 
-            class="w-full"
-            @swiper="onSwiper"
-        >
+        <Swiper :modules="[Navigation]" :slides-per-view="'auto'" :space-between="14" :navigation="{
+            nextEl: nextEl,
+            prevEl: prevEl
+        }" class="w-full" @swiper="onSwiper">
             <SwiperSlide v-for="card in cards" :key="card.label" class="!w-auto">
                 <div class="flex flex-row bg-white rounded-lg justify-center items-center cursor-pointer">
                     <img :src="card.img" :alt="card.label" class="w-auto h-auto">
@@ -77,10 +68,9 @@ const goNext = () => {
 };
 
 onMounted(() => {
-    // Ensure navigation elements are properly connected
     if (swiperInstance.value && prevEl.value && nextEl.value) {
         swiperInstance.value.navigation.init();
         swiperInstance.value.navigation.update();
     }
 });
-</script> 
+</script>

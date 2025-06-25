@@ -1,22 +1,10 @@
 <template>
     <div class="flex flex-col gap-2 w-full pl-[30px] pb-6">
         <div class="flex flex-wrap gap-2">
-            <div v-for="(options, key) in filterOptions" :key="key" class="relative" :class="getSelectClass(key)">
-                <button @click="toggleDropdown(key)"
-                    class="w-full rounded-full text-black bg-[#F8F4FE] px-4 py-2 outline-none cursor-pointer font-ibm font-medium text-[16px] leading-[27px] tracking-[0%] flex items-center justify-between"
-                    :class="openDropdowns[key] ? 'ring-2 ring-purple-200' : ''">
-                    <span class="text-left">{{ getFilterLabel(key) }}</span>
-                    <Svg name="arrow-down" class="w-4 h-4 ml-2 transition-transform duration-200"
-                        :class="openDropdowns[key] ? 'rotate-180' : ''"></Svg>
-                </button>
-                <div v-if="openDropdowns[key]"
-                    class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-10 max-h-60 overflow-y-auto">
-                    <div v-for="option in options" :key="option" @click="selectOption(key, option)"
-                        class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left font-ibm text-[14px] leading-[20px]"
-                        :class="getSelectedValue(key) === option ? 'bg-purple-50 text-purple-700' : 'text-gray-700'">
-                        {{ option }}
-                    </div>
-                </div>
+            <div v-for="(options, key) in filterOptions" :key="key" class="relative min-w-[160px] max-w-[220px]">
+                <CustomDropdown :model-value="selectedValues[key] ?? null"
+                    :options="[{ label: 'All', value: 'All' }, ...options.map(opt => ({ label: opt, value: opt }))]"
+                    :placeholder="getFilterLabel(key)" @update:modelValue="val => onDropdownSelect(key, val)" />
             </div>
         </div>
         <div class="flex flex-wrap gap-2 mt-2">
@@ -41,7 +29,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import Svg from './Svg.vue';
+import CustomDropdown from './CustomDropdown.vue';
 
 const props = defineProps({
     filterOptions: {
@@ -56,7 +44,6 @@ const props = defineProps({
 
 const emit = defineEmits(['addFilter', 'removeFilter', 'clearAllFilters']);
 
-const openDropdowns = ref({});
 const selectedValues = ref({});
 
 const addFilter = (type, value) => {
@@ -70,34 +57,11 @@ const removeFilter = (index) => {
 const clearAllFilters = () => {
     emit('clearAllFilters');
     selectedValues.value = {};
-    openDropdowns.value = {};
 };
 
-const toggleDropdown = (key) => {
-    // Close all other dropdowns
-    Object.keys(openDropdowns.value).forEach(k => {
-        if (k !== key) {
-            openDropdowns.value[k] = false;
-        }
-    });
-
-    // Toggle current dropdown
-    openDropdowns.value[key] = !openDropdowns.value[key];
-};
-
-const selectOption = (key, option) => {
-    selectedValues.value[key] = option;
-    openDropdowns.value[key] = false;
-    addFilter(key, option);
-};
-
-const getSelectedValue = (key) => {
-    return selectedValues.value[key];
-};
-
-const getSelectClass = (key) => {
-    const widthClass = key === 'max-w-[200px]';
-    return widthClass;
+const onDropdownSelect = (key, val) => {
+    selectedValues.value[key] = val;
+    addFilter(key, val);
 };
 
 const getFilterLabel = (key) => {
@@ -111,7 +75,6 @@ const getFilterLabel = (key) => {
     return labels[key] || key.charAt(0).toUpperCase() + key.slice(1);
 };
 
-// Close dropdowns when clicking outside
 const handleClickOutside = (event) => {
     const dropdowns = document.querySelectorAll('.relative');
     let clickedInside = false;

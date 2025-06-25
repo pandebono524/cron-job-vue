@@ -5,12 +5,12 @@
         <button class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" @click="$emit('upgrade')">
           <Svg name="upgrade"></Svg>
           <span
-            class="font-ibm font-semibold text-sm bg-gradient-to-r from-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            class="font-ibm font-semibold text-sm bg-premium-gradient from-premium-start to-premium-end bg-clip-text text-transparent">
             Upgrade Now
           </span>
         </button>
         <div class="relative">
-          <div class="p-px rounded-lg bg-gradient-to-r from-pink-600 to-indigo-600">
+          <div class="p-px rounded-lg bg-premium-gradient from-premium-start to-premium-end">
             <div class="flex items-center gap-1 py-2.5 px-4 bg-white rounded-lg cursor-pointer">
               <Svg name="usd"></Svg>
               <span class="font-ibm font-medium text-sm text-black">USD</span>
@@ -24,7 +24,7 @@
           class="flex items-center gap-1 px-2 py-1 rounded-full bg-gradient-to-r from-pink-50 to-indigo-50 cursor-pointer hover:bg-gradient-to-r hover:from-pink-100 hover:to-indigo-100 transition">
           <img src="../assets/images/user.png" alt="User avatar" class="w-6 h-6" />
           <span
-            class="hidden sm:flex font-ibm font-medium text-sm bg-gradient-to-r from-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            class="hidden sm:flex font-ibm font-medium text-sm bg-premium-gradient from-premium-start to-premium-end bg-clip-text text-transparent">
             Ted Blue
           </span>
           <Svg name="arrow-down" class="w-4 h-4 text-black"></Svg>

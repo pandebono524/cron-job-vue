@@ -27,10 +27,10 @@
                         Showing 1 to 10 of 50,000 services.
                     </span>
                     <span
-                        class="relative font-ibm cursor-pointer font-semibold text-[16px] leading-[27px] tracking-[0%] bg-gradient-to-r from-[#C5269A] to-[#4E43E5] bg-clip-text text-transparent w-fit">
+                        class="relative font-ibm cursor-pointer font-semibold text-[16px] leading-[27px] tracking-[0%] bg-premium-gradient from-premium-start to-premium-end bg-clip-text text-transparent w-fit">
                         Show 6,135 more services.
                         <span
-                            class="absolute left-0 right-0 bottom-0 h-[2px] w-full bg-gradient-to-r from-[#C5269A] to-[#4E43E5]"></span>
+                            class="absolute left-0 right-0 bottom-0 h-[2px] w-full bg-premium-gradient from-premium-start to-premium-end"></span>
                     </span>
                 </div>
                 <div class="flex flex-row justify-center items-center">
