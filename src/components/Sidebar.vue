@@ -8,7 +8,7 @@
                 <span class="font-ibm font-semibold text-black text-[18px] tracking-wide">Panel Gift</span>
             </div>
             <div v-else class="flex justify-center items-center mb-6">
-                <span class="font-ibm font-semibold text-[18px] tracking-wide">PG</span>
+                <span class="text-black font-ibm font-semibold text-[18px] tracking-wide">PG</span>
             </div>
         </div>
 
