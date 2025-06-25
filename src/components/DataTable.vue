@@ -18,7 +18,7 @@
                             <SortIcons :sort-key="'level'" :sort="sort" />
                         </div>
                     </th>
-                    <th class="px-2 py-1.5 w-45 cursor-pointer border border-[#FFFFFF1A]" @click="setSort('name')">
+                    <th class="px-2 py-1.5 w-auto cursor-pointer border border-[#FFFFFF1A]" @click="setSort('name')">
                         <div
                             class="flex items-center justify-between w-full font-ibm font-normal text-[14px] leading-[27px] tracking-[0%]">
                             Name
@@ -46,7 +46,7 @@
                             <SortIcons :sort-key="'features'" :sort="sort" />
                         </div>
                     </th>
-                    <th class="px-2 py-1.5 w-auto rounded-r-[5px] cursor-pointer border border-[#FFFFFF1A]"
+                    <th class="px-2 py-1.5 w-80 rounded-r-[5px] cursor-pointer border border-[#FFFFFF1A]"
                         @click="setSort('status')">
                         <div
                             class="flex items-center justify-between w-full font-ibm font-normal text-[14px] leading-[27px] tracking-[0%]">
@@ -62,7 +62,7 @@
                             <div class="relative rounded-[5px] w-15 mt-[28px]"
                                 style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
                                 <input v-model="filters.id"
-                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-[14px] border-0 pt-[3px]" />
+                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-[14px] border-0 pt-[3px] py-1" />
                             </div>
                         </div>
                     </td>
@@ -70,27 +70,20 @@
                         <div class="flex items-center justify-center">
                             <div class="relative rounded-[5px] w-45 mt-[28px]"
                                 style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
-                                <select v-model="filters.provider"
-                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-black text-[14px] font-medium border-0 pt-[3px]">
-                                    <option value="all" class="text-black text-[14px] font-medium" selected>
-                                        All
-                                    </option>
-                                    <option value="provider one" class="text-black text-[14px] font-medium">
-                                        Provider
-                                        One</option>
-                                    <option value="provider two" class="text-black text-[14px] font-medium">
-                                        Provider
-                                        Two</option>
-                                </select>
+                                <CustomDropdown :model-value="filters.provider" :options="[
+                                    { label: 'All', value: 'all' },
+                                    { label: 'Provider One', value: 'provider one' },
+                                    { label: 'Provider Two', value: 'provider two' }
+                                ]" @update:modelValue="val => filters.provider = val" :searchable="true" />
                             </div>
                         </div>
                     </td>
                     <td class="">
-                        <div class="flex items-center justify-center">
-                            <div class="relative rounded-[5px] w-45 mt-[28px]"
+                        <div class="flex items-center justify-center w-full">
+                            <div class="relative rounded-[5px] w-full mt-[28px]"
                                 style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
                                 <input v-model="filters.name"
-                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-[14px] border-0 pt-[3px]" />
+                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-[14px] border-0 pt-[3px] py-1" />
                             </div>
                         </div>
                     </td>
@@ -99,7 +92,7 @@
                             <div class="relative rounded-[5px] w-15 mt-[28px]"
                                 style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
                                 <input v-model="filters.price"
-                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-[14px] border-0 pt-[3px]" />
+                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-[14px] border-0 pt-[3px] py-1" />
                             </div>
                         </div>
                     </td>
@@ -107,25 +100,19 @@
                         <div class="flex flex-row gap-1">
                             <div class="relative rounded-[5px] w-14 mt-[28px]"
                                 style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
-                                <select v-model="filters.min"
-                                    class="w-full rounded-[5px] bg-white outline-none text-black text-[14px] font-medium border-0 pt-[3px]">
-                                    <option value="1" class="text-black text-[14px] font-medium">1</option>
-                                    <option value="5" class="text-black text-[14px] font-medium">5</option>
-                                    <option value="10" class="text-black text-[14px] font-medium">10
-                                    </option>
-                                </select>
+                                <CustomDropdown :model-value="filters.min" :options="[
+                                    { label: '1', value: '1' },
+                                    { label: '5', value: '5' },
+                                    { label: '10', value: '10' }
+                                ]" @update:modelValue="val => filters.min = val" :searchable="false" />
                             </div>
                             <div class="relative rounded-[5px] w-14 mt-[28px]"
                                 style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
-                                <select v-model="filters.max"
-                                    class="w-full rounded-[5px] bg-white outline-none text-black text-[14px] font-medium border-0 pt-[3px]">
-                                    <option value="100" class="text-black text-[14px] font-medium">100
-                                    </option>
-                                    <option value="500" class="text-black text-[14px] font-medium">
-                                        500</option>
-                                    <option value="1000" class="text-black text-[14px] font-medium">
-                                        1000</option>
-                                </select>
+                                <CustomDropdown :model-value="filters.max" :options="[
+                                    { label: '100', value: '100' },
+                                    { label: '500', value: '500' },
+                                    { label: '1000', value: '1000' }
+                                ]" @update:modelValue="val => filters.max = val" :searchable="false" />
                             </div>
                         </div>
                     </td>
@@ -134,7 +121,7 @@
                             <div class="relative rounded-[5px] w-15 mt-[28px]"
                                 style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
                                 <input v-model="filters.features"
-                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-[14px] border-0 pt-[3px]" />
+                                    class="w-full rounded-[5px] px-2 bg-white outline-none text-[14px] border-0 pt-[3px] py-1" />
                             </div>
                         </div>
                     </td>
@@ -145,15 +132,11 @@
                                     Progress</span>
                                 <div class="relative rounded-[5px] w-20"
                                     style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
-                                    <select v-model="filters.inProgress"
-                                        class="w-full rounded-[5px] bg-white outline-none text-black text-[14px] font-medium border-0 pt-[3px]">
-                                        <option value="all" class="text-black text-[14px] font-medium">All
-                                        </option>
-                                        <option value="5" class="text-black text-[14px] font-medium">5
-                                        </option>
-                                        <option value="10" class="text-black text-[14px] font-medium">10
-                                        </option>
-                                    </select>
+                                    <CustomDropdown :model-value="filters.inProgress" :options="[
+                                        { label: 'All', value: 'all' },
+                                        { label: '5', value: '5' },
+                                        { label: '10', value: '10' }
+                                    ]" @update:modelValue="val => filters.inProgress = val" :searchable="false" />
                                 </div>
                             </div>
                             <div class="flex flex-col gap-1">
@@ -161,15 +144,11 @@
                                     class="font-ibm font-medium text-[10px] leading-[27px] tracking-[0%]">Complete</span>
                                 <div class="relative rounded-[5px] w-20"
                                     style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
-                                    <select v-model="filters.complete"
-                                        class="w-full rounded-[5px] bg-white outline-none text-black text-[14px] font-medium border-0 pt-[3px]">
-                                        <option value="all" class="text-black text-[14px] font-medium">All
-                                        </option>
-                                        <option value="5" class="text-black text-[14px] font-medium">5
-                                        </option>
-                                        <option value="10" class="text-black text-[14px] font-medium">10
-                                        </option>
-                                    </select>
+                                    <CustomDropdown :model-value="filters.complete" :options="[
+                                        { label: 'All', value: 'all' },
+                                        { label: '5', value: '5' },
+                                        { label: '10', value: '10' }
+                                    ]" @update:modelValue="val => filters.complete = val" :searchable="false" />
                                 </div>
                             </div>
                             <div class="flex flex-col gap-1">
@@ -177,15 +156,11 @@
                                     class="font-ibm font-medium text-[10px] leading-[27px] tracking-[0%]">Status</span>
                                 <div class="relative rounded-[5px] w-20"
                                     style="background: linear-gradient(90deg, rgba(197, 38, 154, 0.25) 9.05%, rgba(78, 67, 229, 0.25) 94.4%); padding: 1px; box-shadow: 15px 15px 30px 0px #EFE3F642;">
-                                    <select v-model="filters.status"
-                                        class="w-full rounded-[5px] bg-white outline-none text-black text-[14px] font-medium border-0 pt-[3px]">
-                                        <option value="all" class="text-black text-[14px] font-medium">All
-                                        </option>
-                                        <option value="5" class="text-black text-[14px] font-medium">5
-                                        </option>
-                                        <option value="10" class="text-black text-[14px] font-medium">10
-                                        </option>
-                                    </select>
+                                    <CustomDropdown :model-value="filters.status" :options="[
+                                        { label: 'All', value: 'all' },
+                                        { label: '5', value: '5' },
+                                        { label: '10', value: '10' }
+                                    ]" @update:modelValue="val => filters.status = val" :searchable="false" />
                                 </div>
                             </div>
                         </div>
@@ -259,6 +234,7 @@
 import { ref, watch } from 'vue';
 import Svg from './Svg.vue';
 import SortIcons from './SortIcons.vue';
+import CustomDropdown from './CustomDropdown.vue';
 import { getFeatureImg, getStatusClass, getLevelStyle } from '../utils/tableUtils.js';
 
 const props = defineProps({
