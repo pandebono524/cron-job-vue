@@ -16,7 +16,6 @@
                 :filters="filters"
                 :sort="sort"
                 v-model:selectedRows="selectedRows"
-                :headerCheckbox="headerCheckbox"
                 @setSort="setSort"
                 @toggleSelectAll="toggleSelectAll"
                 @toggleActivate="toggleActivate"
@@ -41,7 +40,7 @@
                         <button :disabled="currentPage === 1" @click="currentPage--"
                             class="w-9 h-9 flex items-center justify-center rounded-md bg-white outline-none border-0 cursor-pointer"
                             :class="currentPage === 1 ? 'text-gray-300' : 'text-gray-700'">
-                            <Svg name="arrow-left" class="w-5 h-5"></Svg>
+                            <Svg name="arrow-left" class="w-5 h-5 text-black"></Svg>
                         </button>
                     </div>
 
