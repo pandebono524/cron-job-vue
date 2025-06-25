@@ -4,7 +4,7 @@
             <thead>
                 <tr class="bg-[#4F44E6] text-white">
                     <th class="rounded-l-[5px] px-2 py-1 w-10">
-                        <input ref="headerCheckbox" type="checkbox" @click="toggleSelectAll"
+                        <input ref="headerCheckboxRef" type="checkbox" @click="toggleSelectAll"
                             class="w-4 h-4 bg-white border-[1px] border-[#E2E6F3] rounded-[6px] shadow-[0_0_0_1px_#E2E6F3] appearance-none checked:bg-[#C8239B] checked:border-[2px] checked:border-white transition" />
                     </th>
                     <th
@@ -256,6 +256,7 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue';
 import Svg from './Svg.vue';
 import SortIcons from './SortIcons.vue';
 import { getFeatureImg, getStatusClass, getLevelStyle } from '../utils/tableUtils.js';
@@ -276,14 +277,12 @@ const props = defineProps({
     selectedRows: {
         type: Array,
         required: true
-    },
-    headerCheckbox: {
-        type: Object,
-        required: true
     }
 });
 
 const emit = defineEmits(['setSort', 'toggleSelectAll', 'toggleActivate', 'toggleFavourite', 'update:selectedRows']);
+
+const headerCheckboxRef = ref(null);
 
 const setSort = (key) => {
     emit('setSort', key);
@@ -312,4 +311,13 @@ const onRowCheckboxChange = (event, id) => {
     }
     emit('update:selectedRows', newSelected);
 };
+
+watch(() => props.selectedRows, () => {
+    if (headerCheckboxRef.value) {
+        const total = props.tableData.length;
+        const selectedCount = props.selectedRows.length;
+        headerCheckboxRef.value.checked = total > 0 && selectedCount === total;
+        headerCheckboxRef.value.indeterminate = selectedCount > 0 && selectedCount < total;
+    }
+}, { immediate: true });
 </script>

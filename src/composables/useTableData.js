@@ -1,4 +1,4 @@
-import { ref, computed, watch, watchEffect } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { initialTableData, initialFilters } from '../data/trendingSearchesData.js';
 
 export function useTableData() {
@@ -8,7 +8,6 @@ export function useTableData() {
     const pageSize = ref(10);
     const currentPage = ref(1);
     const selectedRows = ref([]);
-    const headerCheckbox = ref(null);
 
     const filteredAndSortedDataRaw = computed(() => {
         let data = [...tableData.value];
@@ -108,15 +107,6 @@ export function useTableData() {
         currentPage.value = 1;
     });
 
-    watchEffect(() => {
-        if (headerCheckbox.value) {
-            const total = filteredAndSortedDataRaw.value.length;
-            const selectedCount = selectedRows.value.length;
-            headerCheckbox.value.checked = total > 0 && selectedCount === total;
-            headerCheckbox.value.indeterminate = selectedCount > 0 && selectedCount < total;
-        }
-    });
-
     watch(filteredAndSortedDataRaw, () => {
         const currentIds = new Set(filteredAndSortedDataRaw.value.map(r => r.id));
         selectedRows.value = selectedRows.value.filter(id => currentIds.has(id));
@@ -129,7 +119,6 @@ export function useTableData() {
         pageSize,
         currentPage,
         selectedRows,
-        headerCheckbox,
         filteredAndSortedData,
         filteredAndSortedDataRaw,
         totalPages,
