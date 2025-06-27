@@ -16,7 +16,7 @@
                     class="w-full px-3 py-2 border-b border-gray-100 outline-none font-ibm text-purple-700 text-[15px]"
                     placeholder="Search..." @keydown.stop />
                 <div v-for="(option, idx) in filteredOptions" :key="option.value" @click="selectOption(option)"
-                    class="px-2 text-center flex items-center justify-center py-2 hover:bg-purple-50 cursor-pointer text-purple-700 text-left font-ibm text-[15px] leading-[20px]"
+                    class="px-2 text-center flex items-center justify-center py-2 hover:bg-purple-50 cursor-pointer text-purple-700 font-ibm text-[15px] leading-[20px]"
                     :class="{
                         'bg-purple-50': isSelected(option),
                         'bg-gray-100': highlightedIndex === idx

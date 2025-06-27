@@ -24,10 +24,9 @@
                 <li v-for="item in sidebarOptions" :key="item.name">
                     <div class="flex items-center transition-all duration-200 rounded-lg cursor-pointer" :class="[
                         isCollapsed ? 'justify-center p-2' : 'px-3 py-2',
-                        activeOption === item.name ? 'bg-white shadow-[0_2px_8px_rgba(117,56,205,0.10)] border border-[#7538CD] text-[#7538CD] font-semibold' : 'hover:bg-gray-100'
+                        (isActive(item) ? 'bg-white shadow-[0_2px_8px_rgba(117,56,205,0.10)] border border-[#7538CD] text-[#7538CD] font-semibold' : 'hover:bg-gray-100')
                     ]" @click="onItemClick(item)">
                         <Svg :name="item.icon" :active="activeOption === item.name"></Svg>
-
 
                         <transition name="fade-slide">
                             <span v-if="!isCollapsed" class="ml-2 text-[13px] truncate"
@@ -35,7 +34,6 @@
                                 {{ item.label }}
                             </span>
                         </transition>
-
 
                         <transition name="fade-slide">
                             <div v-if="item.badge && !isCollapsed" class="ml-auto">
@@ -53,7 +51,6 @@
                                 :class="openSubmenu === item.name ? 'rotate-180' : ''" />
                         </transition>
                     </div>
-
 
                     <transition name="fade-slide">
                         <ul v-if="item.children && openSubmenu === item.name && !isCollapsed"
@@ -149,6 +146,14 @@ function onItemClick(item) {
         setActive(item.name)
         openSubmenu.value = null
     }
+}
+
+function isActive(item) {
+    if (activeOption.value === item.name) return true;
+    if (item.children) {
+        return item.children.some(child => activeOption.value === child.name);
+    }
+    return false;
 }
 </script>
 

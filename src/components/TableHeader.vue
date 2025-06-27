@@ -6,19 +6,6 @@
             <span class="font-ibm text-black font-medium text-[22px] leading-[100%] tracking-[0%] align-middle">
                 Search Result
             </span>
-            <div class="flex flex-row justify-center items-center gap-[10px]">
-                <span class="font-ibm text-black font-normal text-[17px] leading-[27px] tracking-[0%]">
-                    Show
-                </span>
-                <div class="relative inline-block">
-                    <CustomDropdown :model-value="pageSize"
-                        :options="pageSizeOptions.map(opt => ({ label: opt, value: opt }))"
-                        @update:modelValue="val => emit('update:pageSize', val)" :searchable="false" />
-                </div>
-                <span class="font-ibm text-black font-normal text-[17px] leading-[27px] tracking-[0%]">
-                    entries
-                </span>
-            </div>
         </div>
         <div class="flex flex-col gap-2 lg:flex-row">
             <span class="font-ibm text-black font-normal text-[16px] leading-[27px] tracking-[0%]">
@@ -35,21 +22,4 @@
 </template>
 
 <script setup>
-import CustomDropdown from './CustomDropdown.vue';
-const props = defineProps({
-    pageSize: {
-        type: Number,
-        required: true
-    },
-    pageSizeOptions: {
-        type: Array,
-        required: true
-    }
-});
-
-const emit = defineEmits(['update:pageSize']);
-
-const updatePageSize = (event) => {
-    emit('update:pageSize', Number(event.target.value));
-};
 </script>
