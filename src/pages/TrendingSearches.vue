@@ -10,7 +10,7 @@
                 @removeFilter="removeFilter"
                 @clearAllFilters="clearAllFilters"
             />
-            <TableHeader :pageSize="pageSize" :pageSizeOptions="pageSizeOptions" @update:pageSize="val => pageSize = val" />
+            <TableHeader />
             <DataTable
                 :tableData="filteredAndSortedData"
                 :filters="filters"
@@ -24,58 +24,20 @@
             <div class="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between items-center pt-9">
                 <div class="flex flex-col md:flex-row gap-2 pl-8.5">
                     <span class="font-ibm text-black font-normal text-[16px] leading-[27px] tracking-[0%]">
-                        Showing 1 to 10 of 50,000 services.
-                    </span>
-                    <span
-                        class="relative font-ibm cursor-pointer font-semibold text-[16px] leading-[27px] tracking-[0%] bg-premium-gradient from-premium-start to-premium-end bg-clip-text text-transparent w-fit">
-                        Show 6,135 more services.
-                        <span
-                            class="absolute left-0 right-0 bottom-0 h-[2px] w-full bg-premium-gradient from-premium-start to-premium-end"></span>
+                        Showing {{ filteredAndSortedData.length }} of {{ filteredAndSortedDataRaw.length }} services.
                     </span>
                 </div>
-                <div class="flex flex-row justify-center items-center">
-                    <div class="relative rounded-md"
-                        :class="currentPage === 1 ? 'opacity-50' : ''"
-                        style="background: linear-gradient(90deg, rgba(200, 35, 155, 0.1) 7.73%, rgba(89, 68, 223, 0.1) 95.41%); padding: 2px; box-shadow: 0px 1px 2px 0px #1018280D;">
-                        <button :disabled="currentPage === 1" @click="currentPage--"
-                            class="w-9 h-9 flex items-center justify-center rounded-md bg-white outline-none border-0 cursor-pointer"
-                            :class="currentPage === 1 ? 'text-gray-300' : 'text-gray-700'">
-                            <Svg name="arrow-left" class="w-5 h-5 text-black"></Svg>
-                        </button>
-                    </div>
-
-                    <div class="flex gap-2 items-center justify-between px-2">
-                        <button v-for="page in totalPages" :key="page" @click="currentPage = page"
-                            class="font-ibm text-[16px] leading-[27px] px-2 outline-none" :class="currentPage === page
-                                ? 'font-bold bg-clip-text text-transparent'
-                                : 'font-normal text-[#323232]'" :style="currentPage === page ? {
-                                    background: 'linear-gradient(90deg, #C5269A 9.05%, #4E43E5 94.4%)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    backgroundClip: 'text',
-                                    color: 'transparent'
-                                } : {}">
-                            {{ page }}
-                        </button>
-                    </div>
-
-                    <div class="relative rounded-md"
-                        :class="currentPage === totalPages ? 'opacity-50' : ''"
-                        style="background: linear-gradient(90deg, rgba(200, 35, 155, 0.1) 7.73%, rgba(89, 68, 223, 0.1) 95.41%); padding: 2px; box-shadow: 0px 1px 2px 0px #1018280D;">
-                        <button :disabled="currentPage === totalPages" @click="currentPage++"
-                            class="w-9 h-9 flex items-center justify-center rounded-md bg-white outline-none border-0 cursor-pointer"
-                            :class="currentPage === totalPages ? 'text-gray-300' : 'text-gray-700'">
-                            <Svg name="arrow-right" class="w-5 h-5"></Svg>
-                        </button>
-                    </div>
-                </div>
+            </div>
+            <div class="flex justify-center mt-4" v-if="canLoadMore">
+                <button @click="loadMore" class="px-6 py-2 rounded-lg font-semibold text-white bg-premium-gradient from-premium-start to-premium-end border border-premium shadow-premium">
+                    Load More
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import Svg from '../components/Svg.vue';
 import TrendingCards from '../components/TrendingCards.vue';
 import SearchHeader from '../components/SearchHeader.vue';
 import FilterSection from '../components/FilterSection.vue';
@@ -90,16 +52,16 @@ const {
     filters,
     sort,
     pageSize,
-    currentPage,
     selectedRows,
-    headerCheckbox,
     filteredAndSortedData,
     filteredAndSortedDataRaw,
-    totalPages,
     setSort,
     toggleSelectAll,
     toggleActivate,
-    toggleFavourite
+    toggleFavourite,
+    visibleCount,
+    canLoadMore,
+    loadMore
 } = useTableData();
 
 const {

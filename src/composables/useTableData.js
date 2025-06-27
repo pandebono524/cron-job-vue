@@ -5,9 +5,9 @@ export function useTableData() {
     const tableData = ref([...initialTableData]);
     const filters = ref({ ...initialFilters });
     const sort = ref({ key: '', asc: true });
-    const pageSize = ref(10);
-    const currentPage = ref(1);
     const selectedRows = ref([]);
+    const visibleCount = ref(5);
+    const LOAD_CHUNK = 10;
 
     const filteredAndSortedDataRaw = computed(() => {
         let data = [...tableData.value];
@@ -69,14 +69,16 @@ export function useTableData() {
     });
 
     const filteredAndSortedData = computed(() => {
-        const start = (currentPage.value - 1) * pageSize.value;
-        const end = start + pageSize.value;
-        return filteredAndSortedDataRaw.value.slice(start, end);
+        return filteredAndSortedDataRaw.value.slice(0, visibleCount.value);
     });
 
-    const totalPages = computed(() => {
-        return Math.ceil(filteredAndSortedDataRaw.value.length / pageSize.value);
+    const canLoadMore = computed(() => {
+        return visibleCount.value < filteredAndSortedDataRaw.value.length;
     });
+
+    function loadMore() {
+        visibleCount.value = Math.min(visibleCount.value + LOAD_CHUNK, filteredAndSortedDataRaw.value.length);
+    }
 
     const setSort = (key) => {
         if (sort.value.key === key) {
@@ -103,8 +105,8 @@ export function useTableData() {
         row.favourite = !row.favourite;
     };
 
-    watch(pageSize, () => {
-        currentPage.value = 1;
+    watch([filteredAndSortedDataRaw], () => {
+        visibleCount.value = LOAD_CHUNK;
     });
 
     watch(filteredAndSortedDataRaw, () => {
@@ -116,15 +118,15 @@ export function useTableData() {
         tableData,
         filters,
         sort,
-        pageSize,
-        currentPage,
         selectedRows,
         filteredAndSortedData,
         filteredAndSortedDataRaw,
-        totalPages,
         setSort,
         toggleSelectAll,
         toggleActivate,
-        toggleFavourite
+        toggleFavourite,
+        visibleCount,
+        canLoadMore,
+        loadMore
     };
 } 
